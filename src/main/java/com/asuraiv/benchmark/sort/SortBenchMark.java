@@ -58,7 +58,7 @@ public class SortBenchMark {
 			.include(SortBenchMark.class.getSimpleName())
 			.warmupIterations(100)
 			.measurementIterations(5).forks(1)
-			.jvmArgs("-server", "-Xms2048", "-Xmx2048")
+			.jvmArgs("-server", "-Xms2048m", "-Xmx2048m")
 			.addProfiler(GCProfiler.class)
 			.addProfiler(StackProfiler.class)
 			.build();
