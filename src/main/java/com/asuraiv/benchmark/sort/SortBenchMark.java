@@ -1,8 +1,16 @@
 package com.asuraiv.benchmark.sort;
 
-import org.openjdk.jmh.annotations.*;
-import org.openjdk.jmh.profile.GCProfiler;
-import org.openjdk.jmh.profile.StackProfiler;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.Fork;
+import org.openjdk.jmh.annotations.Measurement;
+import org.openjdk.jmh.annotations.Mode;
+import org.openjdk.jmh.annotations.OutputTimeUnit;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.annotations.Warmup;
+import org.openjdk.jmh.profile.HotspotCompilationProfiler;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -16,14 +24,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @State(Scope.Benchmark)
-@BenchmarkMode(Mode.Throughput)
+@BenchmarkMode(Mode.AverageTime)
 @Warmup(iterations = 5, time = 1)
 @Measurement(iterations = 5, time = 1)
-@OutputTimeUnit(TimeUnit.SECONDS)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 @Fork(1)
 public class SortBenchMark {
 
-	private static final int N = 1_000;
+	private static final int N = 1000_000;
 	private static List<Integer> testData = new ArrayList<>();
 
 	@Setup
@@ -56,11 +64,8 @@ public class SortBenchMark {
 
 		Options opt = new OptionsBuilder()
 			.include(SortBenchMark.class.getSimpleName())
-			.warmupIterations(100)
-			.measurementIterations(5).forks(1)
 			.jvmArgs("-server", "-Xms2048m", "-Xmx2048m")
-			.addProfiler(GCProfiler.class)
-			.addProfiler(StackProfiler.class)
+			.addProfiler(HotspotCompilationProfiler.class)
 			.build();
 
 		new Runner(opt).run();
