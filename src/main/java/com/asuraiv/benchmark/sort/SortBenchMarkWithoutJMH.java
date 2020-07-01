@@ -7,12 +7,12 @@ import java.util.Random;
 
 /*
 	java option:
-	-Xms2048m -Xmx2048m -XX:+PrintCompilation -verbose:gc
+	-Xms2048m -Xmx2048m -XX:+PrintCompilation -XX:+PrintCodeCache -verbose:gc
  */
 public class SortBenchMarkWithoutJMH {
 
-	private static final int N = 1_000;
-	private static final int I = 150_000;
+	private static final int N = 1000_000;
+	private static final int I = 5;
 
 	private static List<Integer> testData = new ArrayList<>();
 
@@ -38,6 +38,7 @@ public class SortBenchMarkWithoutJMH {
 
 		double endTime = System.nanoTime();
 		double timePerOperation = ((endTime - startTime) / (1_000_000_000L * I));
+
 		System.out.println("결과: " + (1 / timePerOperation) + " op/s");
 	}
 }

@@ -2,6 +2,7 @@ package com.asuraiv.benchmark.sort;
 
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.BenchmarkMode;
+import org.openjdk.jmh.annotations.CompilerControl;
 import org.openjdk.jmh.annotations.Fork;
 import org.openjdk.jmh.annotations.Measurement;
 import org.openjdk.jmh.annotations.Mode;
@@ -48,16 +49,6 @@ public class SortBenchMark {
 		List<Integer> copy = new ArrayList<>(testData);
 		Collections.sort(copy);
 		return copy;
-	}
-
-	@Benchmark
-	public List<Integer> standardSort() {
-		return testData.stream().sorted().collect(Collectors.toList());
-	}
-
-	@Benchmark
-	public List<Integer> parallelSort() {
-		return testData.parallelStream().sorted().collect(Collectors.toList());
 	}
 
 	public static void main(String[] args) throws RunnerException {
