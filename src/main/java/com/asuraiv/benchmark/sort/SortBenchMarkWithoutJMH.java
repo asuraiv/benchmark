@@ -11,34 +11,34 @@ import java.util.Random;
  */
 public class SortBenchMarkWithoutJMH {
 
-	private static final int N = 1000_000;
-	private static final int I = 5;
+private static final int N = 10_000_000;
+private static final int I = 10;
 
-	private static List<Integer> testData = new ArrayList<>();
+private static List<Integer> testData = new ArrayList<>();
 
-	static {
+static {
 
-		Random random = new Random();
+	Random random = new Random();
 
-		for(int i = 0; i < N; i++) {
-			testData.add(random.nextInt(Integer.MAX_VALUE));
-		}
+	for(int i = 0; i < N; i++) {
+		testData.add(random.nextInt(Integer.MAX_VALUE));
+	}
+}
+
+public static void main(String[] args) {
+
+	System.out.println("정렬 알고리즘 테스트");
+
+	double startTime = System.currentTimeMillis();
+
+	for (int i = 0; i < I; i++) {
+		List<Integer> copiedData = new ArrayList<>(testData);
+		Collections.sort(copiedData);
 	}
 
-	public static void main(String[] args) {
+	double endTime = System.currentTimeMillis();
+	double timePerOperation = ((endTime - startTime) / I);
 
-		System.out.println("정렬 알고리즘 테스트");
-
-		double startTime = System.nanoTime();
-
-		for (int i = 0; i < I; i++) {
-			List<Integer> copiedData = new ArrayList<>(testData);
-			Collections.sort(copiedData);
-		}
-
-		double endTime = System.nanoTime();
-		double timePerOperation = ((endTime - startTime) / (1_000_000_000L * I));
-
-		System.out.println("결과: " + (1 / timePerOperation) + " op/s");
-	}
+	System.out.println(String.format("결과: %.10f op/s", 1 / timePerOperation));
+}
 }
